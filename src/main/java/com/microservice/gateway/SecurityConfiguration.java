@@ -1,4 +1,4 @@
-package com.microservice.gateway;
+/*package com.microservice.gateway;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,3 +20,4 @@ public class SecurityConfiguration {
         return httpSecurity.build();
     }
 }
+*/

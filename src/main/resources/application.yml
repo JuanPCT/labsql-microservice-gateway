@@ -1,5 +1,64 @@
+server:
+  port: 8080
+
 spring:
   application:
-    name: msvc-gateway
-  config:
-    import: optional:configserver:http://localhost:8888
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: msvc-students
+          uri: lb://msvc-students:8081
+          predicates:
+            - Path=/api/practica/**
+        - id: msvc-students
+          uri: lb://msvc-students:8081
+          predicates:
+            - Path=/api/ejercicio/**
+        - id: msvc-students
+          uri: lb://msvc-students:8081
+          predicates:
+            - Path=/api/opcion/**
+
+        - id: msvc-administration
+          uri: lb://msvc-administration:8082
+          predicates:
+            - Path=/api/categoria/**
+        - id: msvc-administration
+          uri: lb://msvc-administration:8082
+          predicates:
+            - Path=/api/examen/**
+        - id: msvc-administration
+          uri: lb://msvc-administration:8082
+          predicates:
+            - Path=/api/problema/**
+        - id: msvc-administration
+          uri: lb://msvc-administration:8082
+          predicates:
+            - Path=/api/tabla/**
+
+        - id: msvc-eureka
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka
+          filters: SetPath=/
+
+        - id: msvc-eureka-static
+          uri: http://localhost:8761
+          predicates:
+            - Path=/eureka/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway.route.RouteDefinitionRouteLocator: INFO
+    org.springframework.cloud.gateway: TRACE
+    root: INFO
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
