@@ -51,7 +51,7 @@ spring:
         - id: msvc-gateway
           uri: http://localhost:8080
           predicates:
-            - Path=/auth/login
+            - Path=/**
 
   security:
     oauth2:
@@ -59,6 +59,12 @@ spring:
         jwt:
           issuer-uri: http://localhost:9090/realms/labsql-microservices-realm
           jwk-set-uri: http://localhost:9090/realms/labsql-microservices-realm/protocol/openid-connect/certs
+
+jwt:
+  auth:
+    converter:
+      resource-id: api-gateway
+      principle-attribute: preferred_username
 
 logging:
   level:
