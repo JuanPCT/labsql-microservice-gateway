@@ -43,11 +43,22 @@ spring:
           predicates:
             - Path=/eureka
           filters: SetPath=/
-
         - id: msvc-eureka-static
           uri: http://localhost:8761
           predicates:
             - Path=/eureka/**
+
+        - id: msvc-gateway
+          uri: http://localhost:8080
+          predicates:
+            - Path=/auth/login
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9090/realms/labsql-microservices-realm
+          jwk-set-uri: http://localhost:9090/realms/labsql-microservices-realm/protocol/openid-connect/certs
 
 logging:
   level:
@@ -61,4 +72,4 @@ eureka:
     hostname: localhost
   client:
     fetch-registry: true
-    register-with-eureka: true
+    register-with-eureka: false
